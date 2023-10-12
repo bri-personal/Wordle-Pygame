@@ -1,2 +1,3 @@
 # Wordle-Pygame
- Wordle game in pygame
+Wordle game in pygame
+Project from 2021-2022
