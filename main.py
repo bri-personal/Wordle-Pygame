@@ -99,7 +99,7 @@ class Game:
         img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
-        draw_text(img, 'ENTER', 24, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
+        draw_text(img, 'ENTER', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
         self.enter_button = Button(self, WIDTH // 2 - int(
             LETTER_BUTTON_SIZE * 5 + BORDER * 4.5) + LETTER_BUTTON_SIZE * 1.5 // 2,
                                    self.board.rect.bottom + BORDER + (LETTER_BUTTON_SIZE + BORDER) * 2, img)
@@ -108,7 +108,7 @@ class Game:
         img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
-        draw_text(img, 'DELETE', 24, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
+        draw_text(img, 'DELETE', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
         self.delete_button = Button(self, WIDTH // 2 + int(
             LETTER_BUTTON_SIZE * 5 + BORDER * 4.5) - LETTER_BUTTON_SIZE * 1.5 // 2,
                                     self.board.rect.bottom + BORDER + (LETTER_BUTTON_SIZE + BORDER) * 2, img)

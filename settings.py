@@ -1,7 +1,7 @@
 # game options/settings
 TITLE = "Wordle"
-WIDTH = 700
-HEIGHT = 950
+HEIGHT = 760
+WIDTH = HEIGHT * 14 // 19
 SIDE = min(WIDTH, HEIGHT)  # use for measurements based on smaller side of window
 BORDER = 10
 LETTER_BUTTON_SIZE = (WIDTH - BORDER * 11) // 10
