@@ -1,8 +1,8 @@
 import enchant
 import pygame
 
-from game_logic import TileResult, WordleLogic
-from settings import *
+from .game_logic import TileResult, WordleLogic
+from .settings import *
 
 _TILE_RESULT_TO_COLOR = {
     TileResult.EMPTY: WHITE,
@@ -112,7 +112,7 @@ class Board(pygame.sprite.Sprite):
             stats_str = ''
             for stat in self.game.stats:
                 stats_str += str(stat) + '\n'
-            with open('stats.txt', 'w') as file:
+            with open('../stats.txt', 'w') as file:
                 file.write(stats_str)
 
     def reset(self, word):
