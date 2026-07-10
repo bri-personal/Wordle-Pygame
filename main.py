@@ -326,8 +326,9 @@ class Game:
                       BORDER, 'midtop')
 
 
-g = Game()
-while g.running:
-    g.new()
+if __name__ == '__main__':
+    g = Game()
+    while g.running:
+        g.new()
 
-pygame.quit()
+    pygame.quit()
