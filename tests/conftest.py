@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from game_logic import WordleLogic, TileResult  # noqa: F401
+from wordle.game_logic import WordleLogic, TileResult  # noqa: F401
 
 
 def make_logic(word="CRANE", num_rounds=6, num_chars=5, word_checker=lambda w: True):

@@ -1,5 +1,5 @@
 from conftest import G, R, Y, make_logic, submit
-from game_logic import TileResult
+from wordle.game_logic import TileResult
 
 
 def test_all_green_when_guess_equals_answer():

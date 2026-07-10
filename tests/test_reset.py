@@ -1,5 +1,5 @@
 from conftest import make_logic, submit, type_word
-from game_logic import TileResult
+from wordle.game_logic import TileResult
 
 
 def test_reset_clears_tiles():
