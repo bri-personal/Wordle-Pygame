@@ -328,3 +328,6 @@ class Game:
             self.letter_buttons[let].image.fill(color)
             draw_text(self.letter_buttons[let].image, let, 32, BLACK, self.letter_buttons[let].rect.width // 2,
                       BORDER, 'midtop')
+
+    def quit(self):
+        pygame.quit()
