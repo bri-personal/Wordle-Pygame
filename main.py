@@ -69,7 +69,7 @@ class Game:
             img = pygame.Surface((LETTER_BUTTON_SIZE, LETTER_BUTTON_SIZE))
             img.fill(WHITE)
             img_rect = img.get_rect()
-            draw_text(img, let, LETTER_BUTTON_SIZE * 2 // 3, BLACK, img_rect.width // 2, BORDER, 'midtop')
+            draw_text(img, let, LETTER_BUTTON_SIZE * 2 // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
             self.letter_buttons[let] = LetterButton(self, x, y, img)
             x += LETTER_BUTTON_SIZE + BORDER
 
@@ -80,7 +80,7 @@ class Game:
             img = pygame.Surface((LETTER_BUTTON_SIZE, LETTER_BUTTON_SIZE))
             img.fill(WHITE)
             img_rect = img.get_rect()
-            draw_text(img, let, LETTER_BUTTON_SIZE * 2 // 3, BLACK, img_rect.width // 2, BORDER, 'midtop')
+            draw_text(img, let, LETTER_BUTTON_SIZE * 2 // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
             self.letter_buttons[let] = LetterButton(self, x, y, img)
             x += LETTER_BUTTON_SIZE + BORDER
 
