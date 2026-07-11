@@ -100,7 +100,7 @@ class Game:
             x += LETTER_BUTTON_SIZE + BORDER
 
         # make enter button
-        img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
+        img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
         draw_text(img, 'ENTER', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
@@ -109,7 +109,7 @@ class Game:
                                    self.board.rect.bottom + BORDER + (LETTER_BUTTON_SIZE + BORDER) * 2, img)
 
         # make delete button
-        img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
+        img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
         draw_text(img, 'DELETE', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
