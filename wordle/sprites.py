@@ -1,3 +1,5 @@
+from enum import Enum
+
 import enchant
 import pygame
 
@@ -12,8 +14,15 @@ _TILE_RESULT_TO_COLOR = {
 }
 
 
+class Page(Enum):
+    PLAY = 'play'
+    END = 'end'
+    STATS = 'stats'
+
+
 # show text on surface with parameters given
-def draw_text(surface, text, size, color, x, y, orientation):
+def draw_text(surface: pygame.Surface, text: str, size: int, color: tuple[int, int, int], x: int, y: int,
+              orientation: str):
     font = pygame.font.Font(pygame.font.match_font(FONT_NAME), size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -28,7 +37,7 @@ def draw_text(surface, text, size, color, x, y, orientation):
 
 # classes
 class Board(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, word, num_rounds=6, num_chars=5):
+    def __init__(self, game, x: int, y: int, word: str, num_rounds: int = 6, num_chars: int = 5):
         self.game = game
         self.groups = self.game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -105,7 +114,7 @@ class Board(pygame.sprite.Sprite):
             self.game.update_letter_button(tiles[result.round_index][i], color)
 
         if result.game_over:
-            self.game.page = 'end'
+            self.game.page = Page.END
             stat_idx = result.round_index if result.won else self.logic.num_rounds
             self.game.stats[stat_idx] += 1
             self.game.stat_total += 1
@@ -143,6 +152,16 @@ class Button:
 
         self.game.screen.blit(self.image, self.rect)
         return action
+
+
+class ActionButton(Button):
+    def __init__(self, game, x, y, text, tile_size):
+        img = pygame.Surface((SIDE // 3, tile_size * 2 // 3))
+        img.fill(BLACK)
+        img_rect = img.get_rect()
+        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
+        draw_text(img, text, SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
+        Button.__init__(self, game, x, y, img)
 
 
 class LetterButton(Button):

@@ -5,7 +5,7 @@ import pygame
 
 from .settings import WIDTH, HEIGHT, TITLE, FONT_NAME, SIDE, BLACK, WHITE, RED, BORDER, LETTER_BUTTON_SIZE, FPS, BLUE, \
     YELLOW, GREEN
-from .sprites import Board, draw_text, Button, LetterButton
+from .sprites import Board, draw_text, Button, LetterButton, ActionButton, Page
 from .words import WORDS_5
 
 
@@ -34,36 +34,21 @@ class Game:
         self.board = Board(self, 0, 0, random.choice(WORDS_5))
 
         # make reset button
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'NEW WORD', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.reset_button = Button(self, WIDTH // 2, self.board.rect.height // 2 - BORDER - img_rect.height, img)
+        self.reset_button = ActionButton(self, WIDTH // 2,
+                                         self.board.rect.height // 2 - BORDER - self.board.TILE_SIZE * 2 // 3,
+                                         'NEW WORD', self.board.TILE_SIZE)
 
         # make stats button
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'STATS', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.stats_button = Button(self, WIDTH // 2, self.board.rect.height // 2 + BORDER, img)
+        self.stats_button = ActionButton(self, WIDTH // 2, self.board.rect.height // 2 + BORDER, 'STATS',
+                                         self.board.TILE_SIZE)
 
         # make back button for stats page
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'BACK', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.back_button = Button(self, WIDTH // 2, HEIGHT - BORDER * 3 - img_rect.height, img)
+        self.back_button = ActionButton(self, WIDTH // 2, HEIGHT - BORDER * 3 - self.board.TILE_SIZE * 2 // 3, 'BACK',
+                                        self.board.TILE_SIZE)
 
         # make reset stats button for stats page
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'RESET', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.reset_stats_button = Button(self, WIDTH // 2, HEIGHT - BORDER * 6 - img_rect.height * 2, img)
+        self.reset_stats_button = ActionButton(self, WIDTH // 2, HEIGHT - BORDER * 6 - self.board.TILE_SIZE * 4 // 3,
+                                               'RESET', self.board.TILE_SIZE)
 
         # make letter buttons
         self.letter_buttons = {}
@@ -100,7 +85,7 @@ class Game:
             x += LETTER_BUTTON_SIZE + BORDER
 
         # make enter button
-        img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
+        img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
         draw_text(img, 'ENTER', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
@@ -109,7 +94,7 @@ class Game:
                                    self.board.rect.bottom + BORDER + (LETTER_BUTTON_SIZE + BORDER) * 2, img)
 
         # make delete button
-        img = img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
+        img = pygame.Surface((LETTER_BUTTON_SIZE * 1.5, LETTER_BUTTON_SIZE))
         img.fill(WHITE)
         img_rect = img.get_rect()
         draw_text(img, 'DELETE', LETTER_BUTTON_SIZE // 3, BLACK, img_rect.width // 2, img_rect.height // 2, 'center')
@@ -131,7 +116,7 @@ class Game:
         for stat in self.stats:
             self.stat_total += stat
 
-        self.page = 'play'
+        self.page: Page = Page.PLAY
         self.run()
 
     # main loop calls other methods for specific pages
@@ -140,80 +125,80 @@ class Game:
         while self.playing:
             # keep loop running at correct speed
             self.clock.tick(FPS)
-            if self.page == 'play':
-                self.play_screen()
-            elif self.page == 'end':
-                self.end_screen()
-            elif self.page == 'stats':
-                self.stats_screen()
-            else:
-                print("Page not found!")
-                self.page = 'start'
+            match self.page:
+                case Page.PLAY:
+                    self.play_screen()
+                case Page.END:
+                    self.end_screen()
+                case Page.STATS:
+                    self.stats_screen()
 
     # default game loop method
     def play_screen(self):
         # process input (events)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.playing = False
-                self.running = False
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_BACKSPACE:
-                    self.board.delete_letter()
-                if event.key == pygame.K_RETURN:
-                    self.board.submit_word()
-                if event.key == pygame.K_a:
-                    self.board.add_letter('A')
-                if event.key == pygame.K_b:
-                    self.board.add_letter('B')
-                if event.key == pygame.K_c:
-                    self.board.add_letter('C')
-                if event.key == pygame.K_d:
-                    self.board.add_letter('D')
-                if event.key == pygame.K_e:
-                    self.board.add_letter('E')
-                if event.key == pygame.K_f:
-                    self.board.add_letter('F')
-                if event.key == pygame.K_g:
-                    self.board.add_letter('G')
-                if event.key == pygame.K_h:
-                    self.board.add_letter('H')
-                if event.key == pygame.K_i:
-                    self.board.add_letter('I')
-                if event.key == pygame.K_j:
-                    self.board.add_letter('J')
-                if event.key == pygame.K_k:
-                    self.board.add_letter('K')
-                if event.key == pygame.K_l:
-                    self.board.add_letter('L')
-                if event.key == pygame.K_m:
-                    self.board.add_letter('M')
-                if event.key == pygame.K_n:
-                    self.board.add_letter('N')
-                if event.key == pygame.K_o:
-                    self.board.add_letter('O')
-                if event.key == pygame.K_p:
-                    self.board.add_letter('P')
-                if event.key == pygame.K_q:
-                    self.board.add_letter('Q')
-                if event.key == pygame.K_r:
-                    self.board.add_letter('R')
-                if event.key == pygame.K_s:
-                    self.board.add_letter('S')
-                if event.key == pygame.K_t:
-                    self.board.add_letter('T')
-                if event.key == pygame.K_u:
-                    self.board.add_letter('U')
-                if event.key == pygame.K_v:
-                    self.board.add_letter('V')
-                if event.key == pygame.K_w:
-                    self.board.add_letter('W')
-                if event.key == pygame.K_x:
-                    self.board.add_letter('X')
-                if event.key == pygame.K_y:
-                    self.board.add_letter('Y')
-                if event.key == pygame.K_z:
-                    self.board.add_letter('Z')
+            match event.type:
+                case pygame.QUIT:
+                    self.playing = False
+                    self.running = False
+                case pygame.KEYUP:
+                    match event.key:
+                        case pygame.K_BACKSPACE:
+                            self.board.delete_letter()
+                        case pygame.K_RETURN:
+                            self.board.submit_word()
+                        case pygame.K_a:
+                            self.board.add_letter('A')
+                        case pygame.K_b:
+                            self.board.add_letter('B')
+                        case pygame.K_c:
+                            self.board.add_letter('C')
+                        case pygame.K_d:
+                            self.board.add_letter('D')
+                        case pygame.K_e:
+                            self.board.add_letter('E')
+                        case pygame.K_f:
+                            self.board.add_letter('F')
+                        case pygame.K_g:
+                            self.board.add_letter('G')
+                        case pygame.K_h:
+                            self.board.add_letter('H')
+                        case pygame.K_i:
+                            self.board.add_letter('I')
+                        case pygame.K_j:
+                            self.board.add_letter('J')
+                        case pygame.K_k:
+                            self.board.add_letter('K')
+                        case pygame.K_l:
+                            self.board.add_letter('L')
+                        case pygame.K_m:
+                            self.board.add_letter('M')
+                        case pygame.K_n:
+                            self.board.add_letter('N')
+                        case pygame.K_o:
+                            self.board.add_letter('O')
+                        case pygame.K_p:
+                            self.board.add_letter('P')
+                        case pygame.K_q:
+                            self.board.add_letter('Q')
+                        case pygame.K_r:
+                            self.board.add_letter('R')
+                        case pygame.K_s:
+                            self.board.add_letter('S')
+                        case pygame.K_t:
+                            self.board.add_letter('T')
+                        case pygame.K_u:
+                            self.board.add_letter('U')
+                        case pygame.K_v:
+                            self.board.add_letter('V')
+                        case pygame.K_w:
+                            self.board.add_letter('W')
+                        case pygame.K_x:
+                            self.board.add_letter('X')
+                        case pygame.K_y:
+                            self.board.add_letter('Y')
+                        case pygame.K_z:
+                            self.board.add_letter('Z')
 
         # update
         self.all_sprites.update()
@@ -271,7 +256,7 @@ class Game:
         if self.reset_stats_button.draw():
             self.reset_stats()
         if self.back_button.draw():
-            self.page = 'end'
+            self.page = Page.END
 
         pygame.display.flip()
 
@@ -298,7 +283,7 @@ class Game:
         self.all_sprites.draw(self.screen)
 
         if self.stats_button.draw():
-            self.page = 'stats'
+            self.page = Page.STATS
 
         if self.reset_button.draw():
             self.reset()
@@ -308,7 +293,7 @@ class Game:
         self.board.reset(random.choice(WORDS_5))
         for let in self.letter_buttons.keys():
             self.update_letter_button(let, WHITE)
-        self.page = 'play'
+        self.page = Page.PLAY
 
     def reset_stats(self):
         self.stat_total = 0
@@ -321,12 +306,13 @@ class Game:
         with open('../stats.txt', 'w') as file:
             file.write(stats_str)
 
-    def update_letter_button(self, let, color):
+    def update_letter_button(self, letter: str, color: tuple[int, int, int]):
         if color != YELLOW or (
-                color == YELLOW and self.letter_buttons[let].color != GREEN and self.letter_buttons[let].color != RED):
-            self.letter_buttons[let].color = color
-            self.letter_buttons[let].image.fill(color)
-            draw_text(self.letter_buttons[let].image, let, 32, BLACK, self.letter_buttons[let].rect.width // 2,
+                color == YELLOW and self.letter_buttons[letter].color != GREEN and self.letter_buttons[
+            letter].color != RED):
+            self.letter_buttons[letter].color = color
+            self.letter_buttons[letter].image.fill(color)
+            draw_text(self.letter_buttons[letter].image, letter, 32, BLACK, self.letter_buttons[letter].rect.width // 2,
                       BORDER, 'midtop')
 
     def quit(self):
