@@ -1,3 +1,5 @@
+from enum import Enum
+
 import enchant
 import pygame
 
@@ -10,6 +12,12 @@ _TILE_RESULT_TO_COLOR = {
     TileResult.YELLOW: YELLOW,
     TileResult.RED: RED,
 }
+
+
+class Page(Enum):
+    PLAY = 'play'
+    END = 'end'
+    STATS = 'stats'
 
 
 # show text on surface with parameters given
@@ -105,7 +113,7 @@ class Board(pygame.sprite.Sprite):
             self.game.update_letter_button(tiles[result.round_index][i], color)
 
         if result.game_over:
-            self.game.page = 'end'
+            self.game.page = Page.END
             stat_idx = result.round_index if result.won else self.logic.num_rounds
             self.game.stats[stat_idx] += 1
             self.game.stat_total += 1

@@ -5,7 +5,7 @@ import pygame
 
 from .settings import WIDTH, HEIGHT, TITLE, FONT_NAME, SIDE, BLACK, WHITE, RED, BORDER, LETTER_BUTTON_SIZE, FPS, BLUE, \
     YELLOW, GREEN
-from .sprites import Board, draw_text, Button, LetterButton, ActionButton
+from .sprites import Board, draw_text, Button, LetterButton, ActionButton, Page
 from .words import WORDS_5
 
 
@@ -116,7 +116,7 @@ class Game:
         for stat in self.stats:
             self.stat_total += stat
 
-        self.page = 'play'
+        self.page: Page = Page.PLAY
         self.run()
 
     # main loop calls other methods for specific pages
@@ -126,15 +126,12 @@ class Game:
             # keep loop running at correct speed
             self.clock.tick(FPS)
             match self.page:
-                case 'play':
+                case Page.PLAY:
                     self.play_screen()
-                case 'end':
+                case Page.END:
                     self.end_screen()
-                case 'stats':
+                case Page.STATS:
                     self.stats_screen()
-                case _:
-                    print("Page not found!")
-                    self.page = 'end'
 
     # default game loop method
     def play_screen(self):
@@ -259,7 +256,7 @@ class Game:
         if self.reset_stats_button.draw():
             self.reset_stats()
         if self.back_button.draw():
-            self.page = 'end'
+            self.page = Page.END
 
         pygame.display.flip()
 
@@ -286,7 +283,7 @@ class Game:
         self.all_sprites.draw(self.screen)
 
         if self.stats_button.draw():
-            self.page = 'stats'
+            self.page = Page.STATS
 
         if self.reset_button.draw():
             self.reset()
@@ -296,7 +293,7 @@ class Game:
         self.board.reset(random.choice(WORDS_5))
         for let in self.letter_buttons.keys():
             self.update_letter_button(let, WHITE)
-        self.page = 'play'
+        self.page = Page.PLAY
 
     def reset_stats(self):
         self.stat_total = 0
