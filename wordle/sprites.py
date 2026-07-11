@@ -21,7 +21,8 @@ class Page(Enum):
 
 
 # show text on surface with parameters given
-def draw_text(surface, text, size, color, x, y, orientation):
+def draw_text(surface: pygame.Surface, text: str, size: int, color: tuple[int, int, int], x: int, y: int,
+              orientation: str):
     font = pygame.font.Font(pygame.font.match_font(FONT_NAME), size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -36,7 +37,7 @@ def draw_text(surface, text, size, color, x, y, orientation):
 
 # classes
 class Board(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, word, num_rounds=6, num_chars=5):
+    def __init__(self, game, x: int, y: int, word: str, num_rounds: int = 6, num_chars: int = 5):
         self.game = game
         self.groups = self.game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)

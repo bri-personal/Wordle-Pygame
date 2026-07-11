@@ -306,12 +306,13 @@ class Game:
         with open('../stats.txt', 'w') as file:
             file.write(stats_str)
 
-    def update_letter_button(self, let, color):
+    def update_letter_button(self, letter: str, color: tuple[int, int, int]):
         if color != YELLOW or (
-                color == YELLOW and self.letter_buttons[let].color != GREEN and self.letter_buttons[let].color != RED):
-            self.letter_buttons[let].color = color
-            self.letter_buttons[let].image.fill(color)
-            draw_text(self.letter_buttons[let].image, let, 32, BLACK, self.letter_buttons[let].rect.width // 2,
+                color == YELLOW and self.letter_buttons[letter].color != GREEN and self.letter_buttons[
+            letter].color != RED):
+            self.letter_buttons[letter].color = color
+            self.letter_buttons[letter].image.fill(color)
+            draw_text(self.letter_buttons[letter].image, letter, 32, BLACK, self.letter_buttons[letter].rect.width // 2,
                       BORDER, 'midtop')
 
     def quit(self):
