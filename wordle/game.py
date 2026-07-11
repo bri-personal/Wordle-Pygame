@@ -155,66 +155,68 @@ class Game:
     def play_screen(self):
         # process input (events)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.playing = False
-                self.running = False
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_BACKSPACE:
-                    self.board.delete_letter()
-                if event.key == pygame.K_RETURN:
-                    self.board.submit_word()
-                if event.key == pygame.K_a:
-                    self.board.add_letter('A')
-                if event.key == pygame.K_b:
-                    self.board.add_letter('B')
-                if event.key == pygame.K_c:
-                    self.board.add_letter('C')
-                if event.key == pygame.K_d:
-                    self.board.add_letter('D')
-                if event.key == pygame.K_e:
-                    self.board.add_letter('E')
-                if event.key == pygame.K_f:
-                    self.board.add_letter('F')
-                if event.key == pygame.K_g:
-                    self.board.add_letter('G')
-                if event.key == pygame.K_h:
-                    self.board.add_letter('H')
-                if event.key == pygame.K_i:
-                    self.board.add_letter('I')
-                if event.key == pygame.K_j:
-                    self.board.add_letter('J')
-                if event.key == pygame.K_k:
-                    self.board.add_letter('K')
-                if event.key == pygame.K_l:
-                    self.board.add_letter('L')
-                if event.key == pygame.K_m:
-                    self.board.add_letter('M')
-                if event.key == pygame.K_n:
-                    self.board.add_letter('N')
-                if event.key == pygame.K_o:
-                    self.board.add_letter('O')
-                if event.key == pygame.K_p:
-                    self.board.add_letter('P')
-                if event.key == pygame.K_q:
-                    self.board.add_letter('Q')
-                if event.key == pygame.K_r:
-                    self.board.add_letter('R')
-                if event.key == pygame.K_s:
-                    self.board.add_letter('S')
-                if event.key == pygame.K_t:
-                    self.board.add_letter('T')
-                if event.key == pygame.K_u:
-                    self.board.add_letter('U')
-                if event.key == pygame.K_v:
-                    self.board.add_letter('V')
-                if event.key == pygame.K_w:
-                    self.board.add_letter('W')
-                if event.key == pygame.K_x:
-                    self.board.add_letter('X')
-                if event.key == pygame.K_y:
-                    self.board.add_letter('Y')
-                if event.key == pygame.K_z:
-                    self.board.add_letter('Z')
+            match event.type:
+                case pygame.QUIT:
+                    self.playing = False
+                    self.running = False
+                case pygame.KEYUP:
+                    match event.key:
+                        case pygame.K_BACKSPACE:
+                            self.board.delete_letter()
+                        case pygame.K_RETURN:
+                            self.board.submit_word()
+                        case pygame.K_a:
+                            self.board.add_letter('A')
+                        case pygame.K_b:
+                            self.board.add_letter('B')
+                        case pygame.K_c:
+                            self.board.add_letter('C')
+                        case pygame.K_d:
+                            self.board.add_letter('D')
+                        case pygame.K_e:
+                            self.board.add_letter('E')
+                        case pygame.K_f:
+                            self.board.add_letter('F')
+                        case pygame.K_g:
+                            self.board.add_letter('G')
+                        case pygame.K_h:
+                            self.board.add_letter('H')
+                        case pygame.K_i:
+                            self.board.add_letter('I')
+                        case pygame.K_j:
+                            self.board.add_letter('J')
+                        case pygame.K_k:
+                            self.board.add_letter('K')
+                        case pygame.K_l:
+                            self.board.add_letter('L')
+                        case pygame.K_m:
+                            self.board.add_letter('M')
+                        case pygame.K_n:
+                            self.board.add_letter('N')
+                        case pygame.K_o:
+                            self.board.add_letter('O')
+                        case pygame.K_p:
+                            self.board.add_letter('P')
+                        case pygame.K_q:
+                            self.board.add_letter('Q')
+                        case pygame.K_r:
+                            self.board.add_letter('R')
+                        case pygame.K_s:
+                            self.board.add_letter('S')
+                        case pygame.K_t:
+                            self.board.add_letter('T')
+                        case pygame.K_u:
+                            self.board.add_letter('U')
+                        case pygame.K_v:
+                            self.board.add_letter('V')
+                        case pygame.K_w:
+                            self.board.add_letter('W')
+                        case pygame.K_x:
+                            self.board.add_letter('X')
+                        case pygame.K_y:
+                            self.board.add_letter('Y')
+                        case pygame.K_z:
+                            self.board.add_letter('Z')
 
         # update
         self.all_sprites.update()
