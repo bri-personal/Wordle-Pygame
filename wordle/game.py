@@ -5,7 +5,7 @@ import pygame
 
 from .settings import WIDTH, HEIGHT, TITLE, FONT_NAME, SIDE, BLACK, WHITE, RED, BORDER, LETTER_BUTTON_SIZE, FPS, BLUE, \
     YELLOW, GREEN
-from .sprites import Board, draw_text, Button, LetterButton
+from .sprites import Board, draw_text, Button, LetterButton, ActionButton
 from .words import WORDS_5
 
 
@@ -34,36 +34,21 @@ class Game:
         self.board = Board(self, 0, 0, random.choice(WORDS_5))
 
         # make reset button
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'NEW WORD', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.reset_button = Button(self, WIDTH // 2, self.board.rect.height // 2 - BORDER - img_rect.height, img)
+        self.reset_button = ActionButton(self, WIDTH // 2,
+                                         self.board.rect.height // 2 - BORDER - self.board.TILE_SIZE * 2 // 3,
+                                         'NEW WORD', self.board.TILE_SIZE)
 
         # make stats button
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'STATS', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.stats_button = Button(self, WIDTH // 2, self.board.rect.height // 2 + BORDER, img)
+        self.stats_button = ActionButton(self, WIDTH // 2, self.board.rect.height // 2 + BORDER, 'STATS',
+                                         self.board.TILE_SIZE)
 
         # make back button for stats page
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'BACK', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.back_button = Button(self, WIDTH // 2, HEIGHT - BORDER * 3 - img_rect.height, img)
+        self.back_button = ActionButton(self, WIDTH // 2, HEIGHT - BORDER * 3 - self.board.TILE_SIZE * 2 // 3, 'BACK',
+                                        self.board.TILE_SIZE)
 
         # make reset stats button for stats page
-        img = pygame.Surface((SIDE // 3, self.board.TILE_SIZE * 2 // 3))
-        img.fill(BLACK)
-        img_rect = img.get_rect()
-        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
-        draw_text(img, 'RESET', SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
-        self.reset_stats_button = Button(self, WIDTH // 2, HEIGHT - BORDER * 6 - img_rect.height * 2, img)
+        self.reset_stats_button = ActionButton(self, WIDTH // 2, HEIGHT - BORDER * 6 - self.board.TILE_SIZE * 4 // 3,
+                                               'RESET', self.board.TILE_SIZE)
 
         # make letter buttons
         self.letter_buttons = {}

@@ -145,6 +145,16 @@ class Button:
         return action
 
 
+class ActionButton(Button):
+    def __init__(self, game, x, y, text, tile_size):
+        img = pygame.Surface((SIDE // 3, tile_size * 2 // 3))
+        img.fill(BLACK)
+        img_rect = img.get_rect()
+        pygame.draw.rect(img, WHITE, (5, 5, img_rect.width - 10, img_rect.height - 10))
+        draw_text(img, text, SIDE // 20, RED, img_rect.width // 2, img_rect.height // 2, 'center')
+        Button.__init__(self, game, x, y, img)
+
+
 class LetterButton(Button):
     def __init__(self, game, x, y, image):
         Button.__init__(self, game, x, y, image)
