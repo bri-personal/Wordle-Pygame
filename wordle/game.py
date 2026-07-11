@@ -140,15 +140,16 @@ class Game:
         while self.playing:
             # keep loop running at correct speed
             self.clock.tick(FPS)
-            if self.page == 'play':
-                self.play_screen()
-            elif self.page == 'end':
-                self.end_screen()
-            elif self.page == 'stats':
-                self.stats_screen()
-            else:
-                print("Page not found!")
-                self.page = 'start'
+            match self.page:
+                case 'play':
+                    self.play_screen()
+                case 'end':
+                    self.end_screen()
+                case 'stats':
+                    self.stats_screen()
+                case _:
+                    print("Page not found!")
+                    self.page = 'end'
 
     # default game loop method
     def play_screen(self):
